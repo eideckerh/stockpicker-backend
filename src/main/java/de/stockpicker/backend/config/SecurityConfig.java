@@ -24,11 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/*.html", "/images/**", "/node_modules/**", "/refdata/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/*.html", "/images/**", "/node_modules/**", "/refdata/**", "/h2-console/**").permitAll()
                 .antMatchers("/test/**").hasAnyAuthority("USER")
-                .antMatchers("/seller-api/**").hasAnyAuthority("USER")
-                .antMatchers("/legacy/**").hasAnyAuthority("USER")
-                .antMatchers("/seller/**").hasAnyAuthority("USER")
+                .antMatchers("/user/**").hasAnyAuthority("USER")
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .realmName("CarsRealm").authenticationEntryPoint(appAuthenticationEntryPoint)
