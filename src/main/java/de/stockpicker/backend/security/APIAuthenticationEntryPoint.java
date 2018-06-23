@@ -19,6 +19,6 @@ public class APIAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
     }
     @Override
     public void afterPropertiesSet() throws Exception {
-        setRealmName("CarsRealm");
+        setRealmName("StockPickerRealm");
     }
 }

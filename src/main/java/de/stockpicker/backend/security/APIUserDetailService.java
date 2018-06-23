@@ -5,7 +5,6 @@ import de.stockpicker.backend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,9 +24,9 @@ public class APIUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
 
-        de.stockpicker.backend.user.Entity.User apiUser = this.userRepository.findDistinctByUsername(userName);
+        de.stockpicker.backend.entity.User apiUser = this.userRepository.findDistinctByUsernameAndActiveIsTrue(userName);
         logger.debug("Found user: " + apiUser.getUsername());
         return new User(apiUser.getUsername(), apiUser.getPassword(), true, true, true,
-                true, AuthorityUtils.createAuthorityList("USER"));
+                true, AuthorityUtils.createAuthorityList(apiUser.getRole()));
     }
 }

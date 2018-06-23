@@ -27,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/*.html", "/images/**", "/node_modules/**", "/refdata/**", "/h2-console/**", "/register").permitAll()
                 .antMatchers("/test/**").hasAnyAuthority("USER")
                 .antMatchers("/user/**").hasAnyAuthority("USER")
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().httpBasic()
-                .realmName("CarsRealm").authenticationEntryPoint(appAuthenticationEntryPoint)
+                .realmName("StockPickerRealm").authenticationEntryPoint(appAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
     @Autowired

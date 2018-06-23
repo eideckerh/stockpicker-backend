@@ -1,4 +1,4 @@
-package de.stockpicker.backend.user.Entity;
+package de.stockpicker.backend.entity;
 
 import lombok.Data;
 
@@ -25,4 +25,10 @@ public class User {
 
     @Column
     private String email;
+
+    @Column
+    private String role;
+
+    @Column
+    private boolean active;
 }
