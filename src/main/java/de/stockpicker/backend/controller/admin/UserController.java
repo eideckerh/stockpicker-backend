@@ -6,8 +6,6 @@ import de.stockpicker.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping(path = "/admin/users")
 public class UserController {
@@ -20,7 +18,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/{userId:[\\d]+}")
     public void updateUser(@PathVariable Long userId, @RequestBody User userRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
         user.setActive(userRequest.isActive());
@@ -32,12 +30,12 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId:[\\d]+}")
     public User getOneUser(@PathVariable Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{userId:[\\d]+}")
     public void deleteOneUser(@PathVariable Long userId) {
         userRepository.deleteById(userId);
     }
