@@ -1,6 +1,7 @@
 package de.stockpicker.backend.controller.admin;
 
 import de.stockpicker.backend.entity.User;
+import de.stockpicker.backend.exception.user.UserNotFoundException;
 import de.stockpicker.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,22 +22,19 @@ public class UserController {
 
     @PostMapping("/{userId}")
     public void updateUser(@PathVariable Long userId, @RequestBody User userRequest) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        System.out.println("Optional" + userOptional.isPresent());
-        if(userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setActive(userRequest.isActive());
-            user.setEmail(userRequest.getEmail());
-            user.setFirstname(userRequest.getFirstname());
-            user.setLastname(userRequest.getLastname());
-            user.setRole(userRequest.getRole());
-            userRepository.save(user);
-        }
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
+        user.setActive(userRequest.isActive());
+        user.setEmail(userRequest.getEmail());
+        user.setFirstname(userRequest.getFirstname());
+        user.setLastname(userRequest.getLastname());
+        user.setRole(userRequest.getRole());
+        userRepository.save(user);
+
     }
 
     @GetMapping("/{userId}")
-    public Optional<User> getOneUser(@PathVariable Long userId) {
-        return userRepository.findById(userId);
+    public User getOneUser(@PathVariable Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
     }
 
     @DeleteMapping("/{userId}")
