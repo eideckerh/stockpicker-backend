@@ -39,14 +39,14 @@ public class SymbolLoader {
         List<String[]> rowList = readValues.readAll();
         for (String[] csvRow : rowList) {
             Optional<SymbolType> typeOptional = symbolTypeRepository.findDistinctByKeyEquals(csvRow[1]);
-            if(!typeOptional.isPresent()) {
+            if (!typeOptional.isPresent()) {
                 SymbolType symbolType = new SymbolType(csvRow[0], csvRow[1]);
                 symbolTypeRepository.save(symbolType);
             }
         }
 
         Optional<SymbolType> symbolTypeOptional = symbolTypeRepository.findDistinctByKeyEquals("DIGITAL_CURRENCY");
-        if(symbolTypeOptional.isPresent()) {
+        if (symbolTypeOptional.isPresent()) {
             SymbolType digitalCurrencyType = symbolTypeOptional.get();
 
             file = new ClassPathResource("setup/digital_currency_list.csv").getFile();
@@ -54,7 +54,7 @@ public class SymbolLoader {
             List<String[]> symbolList = readValues.readAll();
             for (String[] csvRow : symbolList) {
                 Optional<Symbol> optionalSymbol = symbolRepository.findDistinctByKeyEquals(csvRow[0]);
-                if(!optionalSymbol.isPresent()) {
+                if (!optionalSymbol.isPresent()) {
                     symbolRepository.save(new Symbol(csvRow[1], csvRow[0], digitalCurrencyType));
                 }
             }
