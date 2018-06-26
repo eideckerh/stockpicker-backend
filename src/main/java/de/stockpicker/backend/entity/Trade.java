@@ -21,6 +21,9 @@ public class Trade {
     private Symbol symbol;
 
     @Column
+    private Long volume;
+
+    @Column
     private Date opened;
 
     @Column
