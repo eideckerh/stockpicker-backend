@@ -16,6 +16,10 @@ public class Trade {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "symbol_id", nullable = false)
+    private Symbol symbol;
+
     @Column
     private Date opened;
 

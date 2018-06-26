@@ -5,9 +5,9 @@ import de.stockpicker.backend.repository.SymbolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.QueryParam;
 import java.util.List;
 
 @RestController
@@ -18,7 +18,7 @@ public class SymbolController {
     SymbolRepository symbolRepository;
 
     @GetMapping
-    public List<Symbol> query(@QueryParam("name") String name) {
+    public List<Symbol> query(@RequestParam("name") String name) {
         return symbolRepository.findByKeyContainingOrNameContainingOrderByName(name, name);
     }
 }
