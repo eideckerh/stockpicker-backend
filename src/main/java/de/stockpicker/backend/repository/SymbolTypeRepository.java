@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface SymbolTypeRepository extends CrudRepository<SymbolType, Long> {
-    public Optional<SymbolType> findDistinctByKeyEquals(String name);
+    public Optional<SymbolType> findDistinctByKeyEquals(String key);
 }
 

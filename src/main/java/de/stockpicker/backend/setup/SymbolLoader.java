@@ -59,5 +59,23 @@ public class SymbolLoader {
                 }
             }
         }
+
+        symbolTypeOptional = symbolTypeRepository.findDistinctByKeyEquals("STOCK");
+        System.out.println(symbolTypeOptional.isPresent());
+        if (symbolTypeOptional.isPresent()) {
+
+            SymbolType stockType = symbolTypeOptional.get();
+
+            file = new ClassPathResource("setup/stock_list.csv").getFile();
+            readValues = mapper.reader(String[].class).with(bootstrapSchema).readValues(file);
+            List<String[]> symbolList = readValues.readAll();
+            System.out.println(symbolList);
+            for (String[] csvRow : symbolList) {
+                Optional<Symbol> optionalSymbol = symbolRepository.findDistinctByKeyEquals(csvRow[0]);
+                if (!optionalSymbol.isPresent()) {
+                    symbolRepository.save(new Symbol(csvRow[1], csvRow[0], stockType));
+                }
+            }
+        }
     }
 }
