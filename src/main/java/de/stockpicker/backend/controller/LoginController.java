@@ -1,16 +1,16 @@
 package de.stockpicker.backend.controller;
 
-import de.stockpicker.backend.repository.UserRepository;
-import de.stockpicker.backend.entity.User;
 import de.stockpicker.backend.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.Produces;
 import java.security.Principal;
-import java.util.Optional;
 
+@Slf4j
 @RestController
 public class LoginController {
 
@@ -19,7 +19,9 @@ public class LoginController {
 
     @GetMapping(path = "/login")
     @Produces("application/json")
-    public User test(Principal principal) {
-        return userService.getUserByUsername(principal.getName());
+    public ResponseEntity<String> test(Principal principal) {
+        String name = userService.getUserByUsername(principal.getName()).getUsername();
+        log.info("logging in {}", name);
+        return ResponseEntity.ok("logged in as " + name);
     }
 }

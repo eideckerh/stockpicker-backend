@@ -24,8 +24,8 @@ public class RegisterController {
         user.setRole("USER");
         user.setActive(false);
 
-        if (userRepository.existsByUsername(user.getUsername())) {
-            return ResponseEntity.badRequest().body("Username already exists");
+        if (userRepository.existsByUsernameOrEmail(user.getUsername(), user.getEmail())) {
+            return ResponseEntity.badRequest().body("Username or Email already exists");
         }
         userRepository.save(user);
         return ResponseEntity.noContent().build();
