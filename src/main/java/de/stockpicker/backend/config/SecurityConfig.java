@@ -20,9 +20,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private APIUserDetailService apiUserDetailService;
     @Autowired
     private APIAuthenticationEntryPoint appAuthenticationEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable().cors().and()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/*.html", "/images/**", "/node_modules/**", "/refdata/**", "/h2-console/**", "/register", "/swagger-ui.html").permitAll()
                 .antMatchers("/test/**").hasAnyAuthority("USER")
@@ -33,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .realmName("StockPickerRealm").authenticationEntryPoint(appAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
