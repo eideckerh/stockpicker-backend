@@ -8,12 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-
 @Service
 public class Client {
 
@@ -39,6 +33,11 @@ public class Client {
         Response batchResponse = DateUtil.convertBatchResponse(restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), Response.class));
 
         return batchResponse;
+    }
+
+    public double getCurrentPrice(String symbol) {
+        Response response = query(symbol);
+        return Double.valueOf(response.getQuotes().get(0).getPrice());
     }
 
     private UriComponentsBuilder getUriBuilder() {

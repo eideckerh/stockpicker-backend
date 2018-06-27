@@ -21,7 +21,7 @@ public class Trade {
     private Symbol symbol;
 
     @Column
-    private Long volume;
+    private Double volume;
 
     @Column
     private Date opened;
@@ -30,8 +30,8 @@ public class Trade {
     private Date closed;
 
     @Column
-    private Long openValue;
+    private Double openValue;
 
     @Column
-    private Long closeValue;
+    private Double closeValue;
 }

@@ -2,7 +2,7 @@ package de.stockpicker.backend.request;
 
 public class TradeRequest {
     private String symbol;
-    private Long volume;
+    private double volume;
 
     public String getSymbol() {
         return symbol;
@@ -12,11 +12,11 @@ public class TradeRequest {
         this.symbol = symbol;
     }
 
-    public Long getVolume() {
+    public double getVolume() {
         return volume;
     }
 
-    public void setVolume(Long volume) {
+    public void setVolume(double volume) {
         this.volume = volume;
     }
 }
