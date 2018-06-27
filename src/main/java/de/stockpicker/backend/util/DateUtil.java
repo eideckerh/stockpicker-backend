@@ -27,7 +27,12 @@ public class DateUtil {
 
         int quoteCount = quotes.size();
         for (int i = 0; i < quoteCount; i++) {
-            quotes.get(i).setTimestamp(convertStringToZonedDate(quotes.get(i).getTimestamp(), response.getMetaData().getTimezone()).format(f));
+            quotes.get(i).setTimestamp(
+                    convertStringToZonedDate(
+                            quotes.get(i).getTimestamp(),
+                            response.getMetaData().getTimezone()
+                    ).format(f)
+            );
         }
 
         return response;
