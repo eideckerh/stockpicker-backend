@@ -22,7 +22,7 @@ public class RegisterController {
     public ResponseEntity register(@RequestBody User user, BCryptPasswordEncoder bCryptPasswordEncoder) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole("USER");
-        user.setActive(false);
+        user.setActive(true);
 
         if (userRepository.existsByUsernameOrEmail(user.getUsername(), user.getEmail())) {
             return ResponseEntity.badRequest().body("Username or Email already exists");
