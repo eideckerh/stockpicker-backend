@@ -29,8 +29,11 @@ public class DateUtil {
                 timeZone
         ).toLocalDateTime();
 
+        DateTimeFormatter df = new DateTimeFormatterBuilder().appendPattern(datetimeFormat).toFormatter().withZone(ZoneId.of(timeZone));
 
-        Instant instant = localDate.atZone(ZoneId.systemDefault()).toInstant();
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime, df);
+
+        Instant instant = zonedDateTime.toLocalDateTime().atZone(ZoneId.of("Europe/Berlin")).toInstant();
         return Date.from(instant);
     }
 
