@@ -1,6 +1,5 @@
-package de.stockpicker.backend.client.alphavantage.webservice.batch;
+package de.stockpicker.backend.client.alphavantage.webservice;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MetaData {

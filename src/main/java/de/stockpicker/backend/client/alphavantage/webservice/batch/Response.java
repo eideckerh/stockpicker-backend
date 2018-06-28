@@ -3,6 +3,7 @@ package de.stockpicker.backend.client.alphavantage.webservice.batch;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.stockpicker.backend.client.alphavantage.webservice.MetaData;
 
 import java.util.List;
 
