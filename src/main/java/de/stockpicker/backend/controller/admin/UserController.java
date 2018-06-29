@@ -24,12 +24,8 @@ public class UserController {
     @PutMapping("/{userId:[\\d]+}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User userRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId.toString()));
-        user.setActive(userRequest.isActive());
-        user.setEmail(userRequest.getEmail());
-        user.setFirstname(userRequest.getFirstname());
-        user.setLastname(userRequest.getLastname());
-        user.setRole(userRequest.getRole());
-        userRepository.save(user);
+        userRequest.setId(userId);
+        userRepository.save(userRequest);
         return ResponseEntity.ok().build();
     }
 
