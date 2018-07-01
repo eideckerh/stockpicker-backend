@@ -2,6 +2,8 @@ package de.stockpicker.backend.controller;
 
 import de.stockpicker.backend.entity.User;
 import de.stockpicker.backend.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class LoginController {
 
     @GetMapping(path = "/login")
     @Produces("application/json")
+    @ApiOperation(value = "Endpunkt zur Prüfung von Benutzer / Passwort Kombination")
     public ResponseEntity<User> test(Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
         log.info("logging in {}", user.getUsername());
