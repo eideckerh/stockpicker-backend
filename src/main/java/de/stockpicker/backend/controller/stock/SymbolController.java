@@ -2,6 +2,8 @@ package de.stockpicker.backend.controller.stock;
 
 import de.stockpicker.backend.entity.Symbol;
 import de.stockpicker.backend.repository.SymbolRepository;
+import de.stockpicker.backend.repository.TradeRepository;
+import de.stockpicker.backend.response.SymbolStatistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,16 @@ public class SymbolController {
     @Autowired
     SymbolRepository symbolRepository;
 
+    @Autowired
+    TradeRepository tradeRepository;
+
     @GetMapping
     public List<Symbol> query(@RequestParam("name") String name) {
         return symbolRepository.findByKeyContainingOrNameContainingOrderByName(name, name);
+    }
+
+    @GetMapping(path = "trending")
+    public List<SymbolStatistic> getMostTradedSymbols() {
+        return tradeRepository.calculateMostTradedSymbols();
     }
 }
