@@ -6,6 +6,7 @@ import de.stockpicker.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -20,5 +21,9 @@ public class UserService {
         } else {
             throw new UserNotFoundException(username);
         }
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        return getUserByUsername(principal.getName());
     }
 }

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import javax.ws.rs.PathParam;
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/trade")
@@ -39,7 +41,7 @@ public class TradeController {
 
         Trade trade = new Trade();
         trade.setSymbol(symbol);
-        trade.setUser(userService.getUserByUsername(principal.getName()));
+        trade.setUser(userService.getUserByPrincipal(principal));
         trade.setVolume(tradeRequest.getVolume());
         trade.setOpened(new Date());
         trade.setOpenValue(batchClient.getCurrentPrice(symbol.getKey()));
@@ -60,5 +62,20 @@ public class TradeController {
         trade.setCloseValue(batchClient.getCurrentPrice(trade.getSymbol().getKey()));
         tradeRepository.save(trade);
         return ResponseEntity.ok(trade);
+    }
+
+    @GetMapping
+    public List<Trade> listAllTrades(Principal principal) {
+        return tradeRepository.findAllByUserOrderByOpened(userService.getUserByPrincipal(principal));
+    }
+
+    @GetMapping(path = "/{id:[\\d]+}")
+    public Trade findTrade(@PathVariable("id") Long id, Principal principal) {
+        return tradeRepository.findTradeByIdAndUser(id, userService.getUserByPrincipal(principal)).orElseThrow(() -> new TradeNotFoundException(id));
+    }
+
+    @GetMapping(path = "/open")
+    public List<Trade> findOpenTrades(Principal principal) {
+        return tradeRepository.findTradesByClosedIsNullAndUser(userService.getUserByPrincipal(principal));
     }
 }
