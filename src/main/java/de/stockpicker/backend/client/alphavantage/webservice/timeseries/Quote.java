@@ -12,7 +12,7 @@ public class Quote {
     private String close;
     private String low;
     private String volume;
-    private Date date;
+    private String date;
 
     @JsonProperty("open")
     public String getOpen() {
@@ -64,11 +64,11 @@ public class Quote {
         this.volume = volume;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

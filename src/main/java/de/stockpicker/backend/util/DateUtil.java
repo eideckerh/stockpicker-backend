@@ -37,6 +37,15 @@ public class DateUtil {
         return Date.from(instant);
     }
 
+    public static String convertDate(String dateTime, String timeZone) {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern(datetimeFormat);
+
+        return convertStringToZonedDate(
+                dateTime,
+                timeZone
+        ).format(f);
+    }
+
     public static Response convertBatchResponse(Response response) {
         DateTimeFormatter f = DateTimeFormatter.ofPattern(datetimeFormat);
 

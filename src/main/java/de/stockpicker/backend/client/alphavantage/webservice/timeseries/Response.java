@@ -16,7 +16,7 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response {
     private MetaData metaData;
-    private Map<Date, Quote> quotes = new HashMap<>();
+    private Map<String, Quote> quotes = new HashMap<>();
 
     @JsonProperty("metaData")
     public MetaData getMetaData() {
@@ -29,7 +29,7 @@ public class Response {
     }
 
     @JsonProperty("quotes")
-    public Map<Date, Quote> getQuotes() {
+    public Map<String, Quote> getQuotes() {
         return quotes;
     }
 
@@ -42,8 +42,8 @@ public class Response {
             for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
 
                 Quote quote = mapper.convertValue(entry.getValue(), Quote.class);
-
-                quotes.put(DateUtil.convertStringToDate(entry.getKey(), "US/Eastern"), quote);
+                quote.setDate(DateUtil.convertDate(entry.getKey(), "US/Eastern"));
+                quotes.put(DateUtil.convertDate(entry.getKey(), "US/Eastern"), quote);
             }
         }
 
