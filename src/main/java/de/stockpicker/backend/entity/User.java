@@ -31,4 +31,7 @@ public class User {
 
     @Column
     private boolean active;
+
+    @Column
+    private double entryFee;
 }
