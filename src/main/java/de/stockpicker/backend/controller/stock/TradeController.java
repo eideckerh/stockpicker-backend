@@ -3,6 +3,7 @@ package de.stockpicker.backend.controller.stock;
 import de.stockpicker.backend.client.alphavantage.webservice.batch.Client;
 import de.stockpicker.backend.entity.Symbol;
 import de.stockpicker.backend.entity.Trade;
+import de.stockpicker.backend.exception.trade.InvalidVolumeException;
 import de.stockpicker.backend.exception.trade.SymbolNotFoundException;
 import de.stockpicker.backend.exception.trade.TradeNotFoundException;
 import de.stockpicker.backend.repository.SymbolRepository;
@@ -37,6 +38,9 @@ public class TradeController {
 
     @PostMapping
     public ResponseEntity createTrade(@RequestBody TradeRequest tradeRequest, Principal principal) {
+        if(tradeRequest.getVolume() <= 0) {
+            throw new InvalidVolumeException(tradeRequest.getVolume());
+        }
         Symbol symbol = symbolRepository.findDistinctByKeyEquals(tradeRequest.getSymbol()).orElseThrow(() -> new SymbolNotFoundException(tradeRequest.getSymbol()));
 
         Trade trade = new Trade();
