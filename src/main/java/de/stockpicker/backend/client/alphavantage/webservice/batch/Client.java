@@ -32,13 +32,11 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
 
         RestTemplate restTemplate = new RestTemplate();
         CryptoResponse cryptoResponse = restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), CryptoResponse.class);
-
         return cryptoResponse;
     }
 
     public double getCurrentPrice(String symbol, String symbolType) {
         if(symbolType.equals("STOCK")) {
-            System.out.println("HO");
             Response response = query(symbol);
             return Double.valueOf(response.getQuotes().get(0).getPrice());
         }

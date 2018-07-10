@@ -2,6 +2,7 @@ package de.stockpicker.backend.controller.stock;
 
 import de.stockpicker.backend.client.alphavantage.webservice.timeseries.Client;
 import de.stockpicker.backend.client.alphavantage.webservice.timeseries.Response;
+import de.stockpicker.backend.entity.Symbol;
 import de.stockpicker.backend.exception.trade.SymbolNotFoundException;
 import de.stockpicker.backend.repository.SymbolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class TimeSerieController {
 
     @GetMapping
     public Response timeSerie(@RequestParam("symbol") String symbol, @RequestParam("function") String function, @RequestParam("interval") String interval) {
-        symbolRepository.findDistinctByKeyEquals(symbol).orElseThrow(() -> new SymbolNotFoundException(symbol));
+        Symbol symbolEntity = symbolRepository.findDistinctByKeyEquals(symbol).orElseThrow(() -> new SymbolNotFoundException(symbol));
         return client.query(symbol, interval, function);
     }
 }

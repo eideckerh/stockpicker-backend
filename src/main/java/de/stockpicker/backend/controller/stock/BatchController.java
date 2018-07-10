@@ -29,7 +29,7 @@ public class BatchController {
 
     @GetMapping
     @Produces(value = "application/json")
-    @ApiOperation(value = "Liefert aktuelle Börsenkurte", notes = "Liefert die aktuellen Börsenkurse der übergebenen Indizies")
+    @ApiOperation(value = "Liefert aktuelle Börsenkurte", notes = "Liefert die aktuellen Börsenkurse des übergebenen Index")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Erfolgreiche Abfrage der Kurse", response = Response.class),
             @ApiResponse(code = 401, message = "Authentifizierung nicht erfolgreich"),
