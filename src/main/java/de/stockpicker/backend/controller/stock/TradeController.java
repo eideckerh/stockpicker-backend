@@ -48,7 +48,7 @@ public class TradeController {
         trade.setUser(userService.getUserByPrincipal(principal));
         trade.setVolume(tradeRequest.getVolume());
         trade.setOpened(new Date());
-        trade.setOpenValue(batchClient.getCurrentPrice(symbol.getKey()));
+        trade.setOpenValue(batchClient.getCurrentPrice(symbol.getKey(), symbol.getType().getKey()));
 
         tradeRepository.save(trade);
 
@@ -63,7 +63,7 @@ public class TradeController {
     public ResponseEntity<Trade> closeTrade(Principal principal, @PathVariable("id") Long id) {
         Trade trade = tradeRepository.findById(id).orElseThrow(() -> new TradeNotFoundException(id));
         trade.setClosed(new Date());
-        trade.setCloseValue(batchClient.getCurrentPrice(trade.getSymbol().getKey()));
+        trade.setCloseValue(batchClient.getCurrentPrice(trade.getSymbol().getKey(), trade.getSymbol().getType().getKey()));
         tradeRepository.save(trade);
         return ResponseEntity.ok(trade);
     }

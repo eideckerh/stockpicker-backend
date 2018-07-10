@@ -22,8 +22,28 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
         return batchResponse;
     }
 
-    public double getCurrentPrice(String symbol) {
-        Response response = query(symbol);
-        return Double.valueOf(response.getQuotes().get(0).getPrice());
+    public CryptoResponse queryCrypto(String symbol) {
+        UriComponentsBuilder uriComponentsBuilder =
+                getPreparedUriBuilder()
+                        .queryParam("function", "CURRENCY_EXCHANGE_RATE")
+                        .queryParam("from_currency", symbol)
+                        .queryParam("to_currency" ,"USD")
+                        .queryParam("apikey", apiKeyService.getApiKey());
+
+        RestTemplate restTemplate = new RestTemplate();
+        CryptoResponse cryptoResponse = restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), CryptoResponse.class);
+
+        return cryptoResponse;
+    }
+
+    public double getCurrentPrice(String symbol, String symbolType) {
+        if(symbolType.equals("STOCK")) {
+            System.out.println("HO");
+            Response response = query(symbol);
+            return Double.valueOf(response.getQuotes().get(0).getPrice());
+        }
+        else {
+            return queryCrypto(symbol).getPrice();
+        }
     }
 }

@@ -2,6 +2,7 @@ package de.stockpicker.backend.controller.stock;
 
 import de.stockpicker.backend.client.alphavantage.webservice.batch.Client;
 import de.stockpicker.backend.client.alphavantage.webservice.batch.Response;
+import de.stockpicker.backend.entity.Symbol;
 import de.stockpicker.backend.exception.trade.SymbolNotFoundException;
 import de.stockpicker.backend.repository.SymbolRepository;
 import io.swagger.annotations.*;
@@ -35,8 +36,8 @@ public class BatchController {
             @ApiResponse(code = 403, message = "Authentifizierung nicht erfolgreich"),
             @ApiResponse(code = 404, message = "Der angefrage Index existiert nicht")
     })
-    public Response batch(@ApiParam(value = "Abzufragender Index", required = true) @RequestParam("symbol") String symbol) {
-        symbolRepository.findDistinctByKeyEquals(symbol).orElseThrow(() -> new SymbolNotFoundException(symbol));
-        return client.query(symbol);
+    public double batch(@ApiParam(value = "Abzufragender Index", required = true) @RequestParam("symbol") String symbol) {
+        Symbol symbolEntity = symbolRepository.findDistinctByKeyEquals(symbol).orElseThrow(() -> new SymbolNotFoundException(symbol));
+        return client.getCurrentPrice(symbolEntity.getKey(), symbolEntity.getType().getKey());
     }
 }
