@@ -2,6 +2,7 @@ package de.stockpicker.backend.client.alphavantage.webservice.timeseries;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.Date;
 
@@ -62,6 +63,13 @@ public class Quote {
     @JsonProperty("5. volume")
     public void setVolume(String volume) {
         this.volume = volume;
+    }
+
+    @JsonSetter("1b. price (USD)")
+    public void setCryptoPrices(String price) {
+        this.open = price;
+        this.high = price;
+        this.close = price;
     }
 
     public String getDate() {

@@ -17,4 +17,19 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), Response.class);
     }
+
+    public Response queryCrypto(String symbol, String interval, String function, String market) {
+        UriComponentsBuilder uriComponentsBuilder =
+                getPreparedUriBuilder()
+                        .queryParam("function", function)
+                        .queryParam("symbol", symbol)
+                        .queryParam("interval", interval)
+                        .queryParam("apikey", apiKeyService.getApiKey())
+                        .queryParam("market", market);
+
+        System.out.println(uriComponentsBuilder.build().toUri().toString());
+
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), Response.class);
+    }
 }

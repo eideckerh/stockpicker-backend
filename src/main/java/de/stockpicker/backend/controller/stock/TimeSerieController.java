@@ -25,6 +25,13 @@ public class TimeSerieController {
     @GetMapping
     public Response timeSerie(@RequestParam("symbol") String symbol, @RequestParam("function") String function, @RequestParam("interval") String interval) {
         Symbol symbolEntity = symbolRepository.findDistinctByKeyEquals(symbol).orElseThrow(() -> new SymbolNotFoundException(symbol));
-        return client.query(symbol, interval, function);
+
+        if(symbolEntity.getType().getKey().equals("DIGITAL_CURRENCY")) {
+            function = "DIGITAL_CURRENCY_INTRADAY";
+           return client.queryCrypto(symbol, interval, function, "EUR");
+        }
+        else {
+            return client.query(symbol, interval, function);
+        }
     }
 }
