@@ -15,7 +15,6 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
                         .queryParam("apikey", apiKeyService.getApiKey());
 
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println(uriComponentsBuilder.build().toUri().toString());
         return restTemplate.getForObject(uriComponentsBuilder.build().toUri().toString(), Response.class);
     }
 }
