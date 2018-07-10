@@ -46,7 +46,5 @@ public class Response {
                 quotes.put(DateUtil.convertDate(entry.getKey(), "US/Eastern"), quote);
             }
         }
-
-        System.out.printf("JSON property: %s: %s", key, value);
     }
 }
