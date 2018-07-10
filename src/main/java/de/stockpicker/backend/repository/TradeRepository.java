@@ -5,6 +5,7 @@ import de.stockpicker.backend.entity.User;
 import de.stockpicker.backend.response.SymbolStatistic;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface TradeRepository extends CrudRepository<Trade, Long> {
     public Optional<Trade> findTradeByIdAndUser(Long id, User user);
 
     public List<Trade> findTradesByClosedIsNullAndUser(User user);
+
+    @Query(value = "SELECT SUM((close_value - open_value) * volume) FROM trade WHERE closed IS NOT NULL AND user_id = ?1", nativeQuery = true)
+    public double calculateTradeProfit(User user);
 }
 
