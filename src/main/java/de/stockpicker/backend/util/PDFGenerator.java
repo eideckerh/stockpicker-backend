@@ -14,7 +14,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-
+/**
+ * Komponente zur Generierung von PDFs
+ */
 @Component
 public class PDFGenerator {
     @Autowired

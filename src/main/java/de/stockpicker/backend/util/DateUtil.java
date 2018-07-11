@@ -11,6 +11,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Util Klasse zur Konvertierung von Datumsangaben zwischen verschiedenen Zeitzonen
+ */
 public class DateUtil {
     private static final String datetimeFormat = "yyyy-MM-dd HH:mm:ss";
 
@@ -20,21 +23,6 @@ public class DateUtil {
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime, df);
         ZonedDateTime local = zonedDateTime.withZoneSameInstant(ZoneId.of("Europe/Berlin"));
         return local;
-    }
-
-    public static Date convertStringToDate(String dateTime, String timeZone) {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern(datetimeFormat);
-        LocalDateTime localDate = convertStringToZonedDate(
-                dateTime,
-                timeZone
-        ).toLocalDateTime();
-
-        DateTimeFormatter df = new DateTimeFormatterBuilder().appendPattern(datetimeFormat).toFormatter().withZone(ZoneId.of(timeZone));
-
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime, df);
-
-        Instant instant = zonedDateTime.toLocalDateTime().atZone(ZoneId.of("Europe/Berlin")).toInstant();
-        return Date.from(instant);
     }
 
     public static String convertDate(String dateTime, String timeZone) {

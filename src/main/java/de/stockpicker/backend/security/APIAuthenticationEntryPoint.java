@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Komponente zur Konfiguration des Realm für Basic Auth
+ */
 @Component
 public class APIAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
     @Override

@@ -3,6 +3,9 @@ package de.stockpicker.backend.response;
 import de.stockpicker.backend.entity.Symbol;
 import lombok.Data;
 
+/**
+ * Klasse zur Datenübertragung von Statistiken eines Index
+ */
 @Data
 public class SymbolStatistic {
     private Symbol symbol;

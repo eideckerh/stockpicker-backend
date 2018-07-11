@@ -9,11 +9,19 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.Optional;
 
+/**
+ * Service zur Suche eines Benutzers
+ */
 @Service
 public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Sucht einen Benutzer anhand des Benutzernamens
+     * @param username Benutzername
+     * @return
+     */
     public User getUserByUsername(String username) {
         Optional<User> userOptional = userRepository.findDistinctByUsernameAndActiveIsTrue(username);
         if (userOptional.isPresent()) {
@@ -23,6 +31,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Suche einen Benutzer auf Basis des übergebenen Pricipals
+     * @param principal Prinzipal des zu suchenden Benutzers
+     * @return
+     */
     public User getUserByPrincipal(Principal principal) {
         return getUserByUsername(principal.getName());
     }

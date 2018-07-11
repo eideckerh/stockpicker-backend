@@ -1,5 +1,8 @@
 package de.stockpicker.backend.request;
 
+/**
+ * Klasse zur Datenübertragung bei Eröffnung eines Trades
+ */
 public class TradeRequest {
     private String symbol;
     private double volume;

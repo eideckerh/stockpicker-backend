@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Komponente zum Setup der Datenbank
+ */
 @Component
 public class SymbolLoader {
 
@@ -29,10 +32,12 @@ public class SymbolLoader {
 
     @PostConstruct
     private void setup() throws IOException {
+        //Konfiguration des CSV-Lesers
         CsvMapper mapper = new CsvMapper();
         CsvSchema bootstrapSchema = CsvSchema.emptySchema().withSkipFirstDataRow(true);
         mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
 
+        //lese die verfügbaren Typen der Indizies ein
         File file = new ClassPathResource("setup/symbol_types.csv").getFile();
         MappingIterator<String[]> readValues =
                 mapper.reader(String[].class).with(bootstrapSchema).readValues(file);
@@ -45,6 +50,7 @@ public class SymbolLoader {
             }
         }
 
+        //lese die verfügbaren Indizies von digitalen Währungen ein
         Optional<SymbolType> symbolTypeOptional = symbolTypeRepository.findDistinctByKeyEquals("DIGITAL_CURRENCY");
         if (symbolTypeOptional.isPresent()) {
             SymbolType digitalCurrencyType = symbolTypeOptional.get();
@@ -60,8 +66,9 @@ public class SymbolLoader {
             }
         }
 
+
+        //lese die verfügbaren Indizies von Aktien ein
         symbolTypeOptional = symbolTypeRepository.findDistinctByKeyEquals("STOCK");
-        System.out.println(symbolTypeOptional.isPresent());
         if (symbolTypeOptional.isPresent()) {
 
             SymbolType stockType = symbolTypeOptional.get();
