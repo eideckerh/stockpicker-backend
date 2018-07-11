@@ -3,6 +3,9 @@ package de.stockpicker.backend.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
+/**
+ * Klasse zur Konfiguration von SwaggerUI
+ */
 @Configuration
 @EnableWebMvc
 public class WebMvcConfiguration implements WebMvcConfigurer {

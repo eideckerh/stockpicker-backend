@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entität zur Speicherung der API-Keys für AlphaVantage
+ */
 @Entity
 @Data
 public class ApiKey {

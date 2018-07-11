@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Klasse zur Deseralisierung der AlphaVantage Batch API
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response {
     private MetaData metaData;

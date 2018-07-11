@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Entität zur Speicherung der Index-Typen
+ */
 @Entity
 @Data
 public class SymbolType {

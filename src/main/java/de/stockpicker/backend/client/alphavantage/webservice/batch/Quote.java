@@ -2,6 +2,10 @@ package de.stockpicker.backend.client.alphavantage.webservice.batch;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+/**
+ * Klasse zur Deseralisierung der AlphaVantage Batch API
+ */
 public class Quote {
     private String symbol;
     private String price;

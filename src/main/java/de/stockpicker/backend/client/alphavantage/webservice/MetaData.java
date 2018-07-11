@@ -2,6 +2,9 @@ package de.stockpicker.backend.client.alphavantage.webservice;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Klasse zur Datenhaltung der Meta Informationen der AlphaVantage API
+ */
 public class MetaData {
 
     private String information;

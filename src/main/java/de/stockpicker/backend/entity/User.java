@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * Entität zur Speicherung der Benutzer der Applikation
+ */
 @Entity
 @Data
 public class User {

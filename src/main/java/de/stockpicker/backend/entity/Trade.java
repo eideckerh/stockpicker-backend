@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entität zur Speicherung von Trades
+ */
 @Entity
 @Data
 public class Trade {

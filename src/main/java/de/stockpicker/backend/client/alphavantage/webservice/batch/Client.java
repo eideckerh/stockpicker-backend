@@ -5,10 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Service zur Abfrage aktueller Börsenkurse
+ */
 @Service("batchClient")
 public class Client extends de.stockpicker.backend.client.alphavantage.webservice.Client {
 
-    public Response query(String symbol) {
+    /**
+     * Abfrage des aktuellen Börsenkurses einer Aktie
+     * @param symbol
+     * @return
+     */
+    private Response query(String symbol) {
 
         UriComponentsBuilder uriComponentsBuilder =
                 getPreparedUriBuilder()
@@ -22,7 +30,12 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
         return batchResponse;
     }
 
-    public CryptoResponse queryCrypto(String symbol) {
+    /**
+     * Abfrage des aktuellen Währungskurses
+     * @param symbol
+     * @return
+     */
+    private CryptoResponse queryCrypto(String symbol) {
         UriComponentsBuilder uriComponentsBuilder =
                 getPreparedUriBuilder()
                         .queryParam("function", "CURRENCY_EXCHANGE_RATE")
@@ -35,6 +48,12 @@ public class Client extends de.stockpicker.backend.client.alphavantage.webservic
         return cryptoResponse;
     }
 
+    /**
+     * Abfrage des aktuellen Preises des übergebenen Symbols
+     * @param symbol
+     * @param symbolType
+     * @return
+     */
     public double getCurrentPrice(String symbol, String symbolType) {
         if(symbolType.equals("STOCK")) {
             Response response = query(symbol);

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.Date;
 
+/**
+ * Klasse zur Deseralisierung der AlphaVantage Batch API
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Quote {
     private String open;

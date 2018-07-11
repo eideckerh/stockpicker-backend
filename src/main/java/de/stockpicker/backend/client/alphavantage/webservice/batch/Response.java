@@ -7,6 +7,9 @@ import de.stockpicker.backend.client.alphavantage.webservice.MetaData;
 
 import java.util.List;
 
+/**
+ * Klasse zur Deseralisierung der AlphaVantage Batch API
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response {
     private MetaData metaData;

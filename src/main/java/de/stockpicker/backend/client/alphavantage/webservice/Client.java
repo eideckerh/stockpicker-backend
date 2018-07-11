@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ * Klasse zur Konfiguration des AlphaVantage Clients
+ */
 public class Client {
     @Value("${alphavantage.scheme}")
     protected String webserviceScheme;

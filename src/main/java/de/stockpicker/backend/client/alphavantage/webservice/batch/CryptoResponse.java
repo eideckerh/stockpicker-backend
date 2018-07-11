@@ -3,6 +3,9 @@ package de.stockpicker.backend.client.alphavantage.webservice.batch;
 
 import com.fasterxml.jackson.annotation.*;
 
+/**
+ * Klasse zur Deseralisierung der AlphaVantage Batch API
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeName("Realtime Currency Exchange Rate")
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
