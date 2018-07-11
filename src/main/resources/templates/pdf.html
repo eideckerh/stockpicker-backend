@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <h1>Meine Trades</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Index</th>
+            <td>Eröffnet am</td>
+            <td>Einstandspreis</td>
+            <td>Geschlossen am</td>
+            <td>Schlusswert</td>
+            <td>Volumen</td>
+            <td>Profit</td>
+        </tr>
+        </thead>
+        <th:block th:each="trade : ${trades}">
+            <tr>
+                <td th:text="${trade.symbol.name}">Index</td>
+                <td th:text="${trade.opened}">Eröffnung am</td>
+                <td th:text="${trade.openValue}">Einstandspreis</td>
+                <td th:text="${trade.closed}">Geschlossen am</td>
+                <td th:text="${trade.closeValue}">Schlusswert</td>
+                <td th:text="${trade.volume}">Volumen</td>
+                <td th:text="${(trade.closeValue - trade.openValue) * trade.volume}">Profit</td>
+            </tr>
+        </th:block>
+    </table>
+</body>
+</html>

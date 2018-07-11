@@ -10,16 +10,24 @@ import de.stockpicker.backend.repository.SymbolRepository;
 import de.stockpicker.backend.repository.TradeRepository;
 import de.stockpicker.backend.request.TradeRequest;
 import de.stockpicker.backend.service.UserService;
+import de.stockpicker.backend.util.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
-import javax.ws.rs.PathParam;
+import javax.print.attribute.standard.Media;
+import javax.ws.rs.Produces;
+import java.io.*;
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/trade")
@@ -36,9 +44,12 @@ public class TradeController {
     @Autowired
     Client batchClient;
 
+    @Autowired
+    PDFGenerator pdfGenerator;
+
     @PostMapping
     public ResponseEntity createTrade(@RequestBody TradeRequest tradeRequest, Principal principal) {
-        if(tradeRequest.getVolume() <= 0) {
+        if (tradeRequest.getVolume() <= 0) {
             throw new InvalidVolumeException(tradeRequest.getVolume());
         }
         Symbol symbol = symbolRepository.findDistinctByKeyEquals(tradeRequest.getSymbol()).orElseThrow(() -> new SymbolNotFoundException(tradeRequest.getSymbol()));
@@ -81,5 +92,22 @@ public class TradeController {
     @GetMapping(path = "/open")
     public List<Trade> findOpenTrades(Principal principal) {
         return tradeRepository.findTradesByClosedIsNullAndUser(userService.getUserByPrincipal(principal));
+    }
+
+    @GetMapping(path = "/report", headers = "Accept=*/*")
+    public ResponseEntity<InputStreamResource> tradeReport(Principal principal) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline, filename=trades.pdf");
+
+        Map<String, Object> pdfParams = new HashMap<>();
+
+        pdfParams.put("trades", tradeRepository.findAllByUserOrderByOpened(userService.getUserByPrincipal(principal)));
+
+        try {
+            File file = pdfGenerator.createPdf("pdf", pdfParams);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(new FileInputStream(file)));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
