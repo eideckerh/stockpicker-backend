@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.ws.rs.Produces;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
@@ -149,7 +150,7 @@ public class TradeController {
     public ResponseEntity<InputStreamResource> tradeReport(Principal principal) {
         //Parameter setzten (Trades)
         Map<String, Object> pdfParams = new HashMap<>();
-        pdfParams.put("trades", tradeRepository.findAllByUserOrderByOpened(userService.getUserByPrincipal(principal)));
+        pdfParams.put("trades", tradeRepository.findAllByUserAndClosedIsNotNullOrderByOpened(userService.getUserByPrincipal(principal)));
 
         try {
             //PDF generieren und ausgeben

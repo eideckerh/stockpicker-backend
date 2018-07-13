@@ -5,7 +5,6 @@ import de.stockpicker.backend.entity.User;
 import de.stockpicker.backend.response.SymbolStatistic;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +16,8 @@ public interface TradeRepository extends CrudRepository<Trade, Long> {
     public List<SymbolStatistic> calculateMostTradedSymbols();
 
     public List<Trade> findAllByUserOrderByOpened(User user);
+
+    public List<Trade> findAllByUserAndClosedIsNotNullOrderByOpened(User user);
 
     public Optional<Trade> findTradeByIdAndUser(Long id, User user);
 
