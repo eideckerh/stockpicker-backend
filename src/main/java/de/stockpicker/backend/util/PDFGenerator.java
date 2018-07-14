@@ -22,7 +22,6 @@ public class PDFGenerator {
     @Autowired
     private TemplateEngine templateEngine;
     public File createPdf(String templateName, Map map) throws Exception {
-        Assert.notNull(templateName, "The templateName can not be null");
         Context ctx = new Context();
         if (map != null) {
             Iterator itMap = map.entrySet().iterator();
@@ -44,7 +43,6 @@ public class PDFGenerator {
             renderer.layout();
             renderer.createPDF(os, false);
             renderer.finishPDF();
-            System.out.println("PDF created successfully");
             return outputFile;
         }
         finally {

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <style>
+        @page { size: A4 landscape;}
+    </style>
 </head>
 <body>
     <h1>Meine Trades</h1>
@@ -19,12 +22,12 @@
         <th:block th:each="trade : ${trades}">
             <tr>
                 <td th:text="${trade.symbol.name}">Index</td>
-                <td th:text="${trade.opened}">Eröffnung am</td>
-                <td th:text="${trade.openValue}">Einstandspreis</td>
-                <td th:text="${trade.closed}">Geschlossen am</td>
-                <td th:text="${trade.closeValue}">Schlusswert</td>
-                <td th:text="${trade.volume}">Volumen</td>
-                <td th:text="${(trade.closeValue - trade.openValue) * trade.volume}">Profit</td>
+                <td th:text="${#dates.format(trade.opened, 'dd.MM.yyyy HH:mm')}">Eröffnung am</td>
+                <td th:text="${#numbers.formatDecimal(trade.openValue, 0, 'POINT', 2, 'COMMA')}">Einstandspreis</td>
+                <td th:text="${#dates.format(trade.closed, 'dd.MM.yyyy HH:mm')}">Geschlossen am</td>
+                <td th:text="${#numbers.formatDecimal(trade.closeValue, 0, 'POINT', 2, 'COMMA')}">Schlusswert</td>
+                <td th:text="${#numbers.formatDecimal(trade.volume, 0, 'POINT', 2, 'COMMA')}">Volumen</td>
+                <td th:text="${#numbers.formatDecimal((trade.closeValue - trade.openValue) * trade.volume, 0, 'POINT', 2, 'COMMA')}" >Profit</td>
             </tr>
         </th:block>
     </table>
