@@ -1,66 +1,13 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: sp.local (MySQL 5.5.5-10.1.26-MariaDB-0+deb9u1)
-# Datenbank: stockpicker
-# Erstellt am: 2018-07-14 18:56:45 +0000
-# ************************************************************
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Export von Tabelle api_key
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `api_key`;
-
-CREATE TABLE `api_key` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `api_key` varchar(255) DEFAULT NULL,
-  `last_use` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-LOCK TABLES `api_key` WRITE;
-/*!40000 ALTER TABLE `api_key` DISABLE KEYS */;
-
 INSERT INTO `api_key` (`id`, `api_key`, `last_use`)
 VALUES
 	(1,'T8EQOGB1QDY9PMLB','2018-07-14 14:35:55'),
 	(2,'5QCBPQGU0688AM5A','2018-07-14 14:35:44'),
 	(3,'E6LHNUU1IFXJWZPB','2018-07-14 14:35:46');
 
-/*!40000 ALTER TABLE `api_key` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Export von Tabelle symbol
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `symbol`;
-
-CREATE TABLE `symbol` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `symbol_key` varchar(255) DEFAULT NULL,
-  `symbol_name` varchar(255) DEFAULT NULL,
-  `type_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKcmihplls521x1qp5kqjvygkhd` (`type_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-LOCK TABLES `symbol` WRITE;
-/*!40000 ALTER TABLE `symbol` DISABLE KEYS */;
+INSERT INTO `symbol_type` (`id`, `type_key`, `type_name`)
+VALUES
+	(1,'DIGITAL_CURRENCY','Digital Currency'),
+	(2,'STOCK','Stock');
 
 INSERT INTO `symbol` (`id`, `symbol_key`, `symbol_name`, `type_id`)
 VALUES
@@ -612,75 +559,10 @@ VALUES
 	(546,'CSCO','Cisco',2),
 	(547,'AXP','American Express',2);
 
-/*!40000 ALTER TABLE `symbol` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Export von Tabelle symbol_type
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `symbol_type`;
-
-CREATE TABLE `symbol_type` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `type_key` varchar(255) DEFAULT NULL,
-  `type_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-LOCK TABLES `symbol_type` WRITE;
-/*!40000 ALTER TABLE `symbol_type` DISABLE KEYS */;
-
-INSERT INTO `symbol_type` (`id`, `type_key`, `type_name`)
+INSERT INTO `user` (`id`, `active`, `email`, `entry_fee`, `firstname`, `lastname`, `password`, `role`, `username`)
 VALUES
-	(1,'DIGITAL_CURRENCY','Digital Currency'),
-	(2,'STOCK','Stock');
-
-/*!40000 ALTER TABLE `symbol_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Export von Tabelle time_serie
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `time_serie`;
-
-CREATE TABLE `time_serie` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `close` double DEFAULT NULL,
-  `series_date` datetime DEFAULT NULL,
-  `high` double DEFAULT NULL,
-  `low` double DEFAULT NULL,
-  `open` double DEFAULT NULL,
-  `volume` double DEFAULT NULL,
-  `symbol_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKc3rwtvgb9ne656hkg6j0t7atv` (`symbol_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-
-
-# Export von Tabelle trade
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `trade`;
-
-CREATE TABLE `trade` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `close_value` double DEFAULT NULL,
-  `closed` datetime DEFAULT NULL,
-  `open_value` double DEFAULT NULL,
-  `opened` datetime DEFAULT NULL,
-  `volume` double DEFAULT NULL,
-  `symbol_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK5f37m7e7c7op4br3tflgixbn1` (`symbol_id`),
-  KEY `FK1dqm16mo3cntjlxap3iusqvyt` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-LOCK TABLES `trade` WRITE;
-/*!40000 ALTER TABLE `trade` DISABLE KEYS */;
+	(2,'1','test@test.de',1000000,'Jens','Risse','$2a$10$7LviVlTgPc7y90KeNpLDrOTZtEYsPLhRh3tEwFMTxq9nc0V1TO3pa','ADMIN','test'),
+	(4,'0','muster@test.de',0,'Max','Mustermann','$2a$10$789cbrf.Vz4/BgZ52yB6nOBzHlqrR1C0u/vSQCG8EhP/q34zNIj2i','USER','muster');
 
 INSERT INTO `trade` (`id`, `close_value`, `closed`, `open_value`, `opened`, `volume`, `symbol_id`, `user_id`)
 VALUES
@@ -691,45 +573,3 @@ VALUES
 	(5,NULL,NULL,191.42,'2018-07-14 14:18:11',200,539,2),
 	(6,NULL,NULL,52.22,'2018-07-14 14:18:42',400,540,2),
 	(7,NULL,NULL,28.53,'2018-07-14 14:35:55',33,543,2);
-
-/*!40000 ALTER TABLE `trade` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Export von Tabelle user
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `active` bit(1) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `entry_fee` double DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-
-INSERT INTO `user` (`id`, `active`, `email`, `entry_fee`, `firstname`, `lastname`, `password`, `role`, `username`)
-VALUES
-	(2,b'1','risse@jens-risse.com',10000,'Jens','Risse','$2a$10$7LviVlTgPc7y90KeNpLDrOTZtEYsPLhRh3tEwFMTxq9nc0V1TO3pa','ADMIN','jrisse'),
-	(4,b'0','muster@jens-risse.com',0,'Max','Mustermann','$2a$10$789cbrf.Vz4/BgZ52yB6nOBzHlqrR1C0u/vSQCG8EhP/q34zNIj2i','USER','muster');
-
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
